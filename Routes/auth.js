@@ -11,12 +11,22 @@ const {
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require('config');
+const auth = require('../Middleware/auth')
+
 
 //@route get api/auth
 //@desc  get logged user
 //@access  Private
-router.get("/", (req, res) => {
-  res.send("get logged in user");
+router.get("/",auth,async (req, res) => {
+  try{
+      //User mongoose to find the user Id
+    const user = await User.findById(req.user.id).select('-password');
+    res.json(user)
+
+  }catch{
+
+    console.error(err.message);
+  }
 });
 
 //@route post api/auth
