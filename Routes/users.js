@@ -24,7 +24,7 @@ check('password','Please enter a password with six or more').isLength({min:6})
     //To use this we need a middleware 
     const errors = validationResult(req);  //creating a errors variable which check errors from req
     if(!errors.isEmpty()){ //Use if statement to check if error variable is empty or not
-        return res.status(400).json({errors:array.array()});//If the errors variable is not empty return a bad status request
+        return res.status(400).json({errors:errors.array()});//If the errors variable is not empty return a bad status request
     }
    
     //Request body should contain three variable
@@ -58,6 +58,7 @@ check('password','Please enter a password with six or more').isLength({min:6})
     await user.save();
 
    //Create a pay load the objet we will send as a respond
+   //Object we are ssending in the token
    const payload ={
       user:{
           id:user.id
@@ -65,16 +66,14 @@ check('password','Please enter a password with six or more').isLength({min:6})
    }
 
     //we are creating a token
- jwt.sign(payload,config.get('jwtSecret'),{
- expiresIn:36000
- },(err,token)=>{
+    jwt.sign(payload,config.get('jwtSecret'),{
+    expiresIn:36000
+    },(err,token)=>{
     //throw error 
     if(err) throw err;
     //pass the object token to the respond
     res.json({token});
-  })
-
-
+  });
   }catch(err){
 
     console.error(err.message);
