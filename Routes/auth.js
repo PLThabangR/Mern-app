@@ -10,21 +10,18 @@ const {
 } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config = require('config');
-const auth = require('../Middleware/auth')
-
+const config = require("config");
+const auth = require("../Middleware/auth");
 
 //@route get api/auth
 //@desc  get logged user
 //@access  Private
-router.get("/",auth,async (req, res) => {
-  try{
-      //User mongoose to find the user Id
-    const user = await User.findById(req.user.id).select('-password');
-    res.json(user)
-
-  }catch{
-
+router.get("/", auth, async (req, res) => {
+  try {
+    //User mongoose to find the user Id
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch {
     console.error(err.message);
   }
 });
@@ -32,7 +29,8 @@ router.get("/",auth,async (req, res) => {
 //@route post api/auth
 //@desc  Auth user and get token
 //@access  Public
-router.post("/",
+router.post(
+  "/",
   [
     check("email", "Please enter a valid email").isEmail(),
     check("password", "Password is required").exists(),
@@ -48,7 +46,7 @@ router.post("/",
 
     const { email, password } = req.body;
 
-    try{
+    try {
       //check is user  email exist
       let user = await User.findOne({ email });
       //if user email does not exist return a error
@@ -88,7 +86,7 @@ router.post("/",
       console.error(err.message);
       res.status(500).send("Server error");
     }
-}
+  }
 );
 
 module.exports = router;

@@ -22,5 +22,5 @@ const UserSchema = new mongoose.Schema({
         default:Date.now
     }
 });
-
+//we are exporting using mongoose by passing the name of the databae to atlas
 module.exports = mongoose.model('user', UserSchema);

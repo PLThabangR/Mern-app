@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const config = require('config');
 
+//Export this middleware function
 module.exports =function(req,res,next){
     //Get the token from header
     //key token to the header x-auth-token
