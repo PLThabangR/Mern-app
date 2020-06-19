@@ -107,8 +107,8 @@ router.delete('/:id',auth, async (req,res)=>{
   if(!contact) return res.status(404).json({msg:'Contact not found'});
 
         //make sure user owns contact to edit
-    // if(contact.user.toString() !== req.user.id){
-      //  return res.status(401).json({msg:'Not authorized'});  }
+     if(contact.user.toString() !== req.user.id){
+       return res.status(401).json({msg:'Not authorized'});  }
        // We are undating now
      
        await Contact.findByIdAndRemove(req.params.id);
