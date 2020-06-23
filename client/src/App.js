@@ -1,23 +1,41 @@
-import React, { Component } from "react";
-import { MDBBtn, MDBCol, MDBContainer, MDBRow } from "mdbreact";
-import "./index.css";
-import logo from "./logo.png";
+import React, { Fragment } from "react";
 
-class App extends Component {
-  render() {
+import "./index.css";
+import Navbar from './components/Layout/Navbar'
+import logo from "./logo.png";
+import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
+import Home from './components/Pages/Home';
+import About from './components/Pages/about';
+
+import ContactState from '../src/Context/Contact/ContactState';
+const App =()=> {
+ 
     return (
-      <MDBContainer>
-        <MDBRow center style={{ height: "100vh" }}>
-          <MDBCol middle="true" sm="8" className="text-center">
-            <img src={logo} alt="logo" style={{ width: "10rem" }} />
-            <h1>Welcome to Your MDB React App</h1>
-            <p className="mb-2">The application is configured and ready to import our components.</p>
-            <MDBBtn href="https://mdbootstrap.com/docs/react/" target="blank" color="light-blue"><strong>Check out our docs!</strong></MDBBtn>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
+      <ContactState>
+      <Router>
+      <Fragment>
+      <Navbar/>
+      <div className="container">
+      
+      <Switch>
+      <Route exact path="/" component={Home}/>
+      <Route exact path="/about" component={About}/>
+      </Switch>
+      </div>
+      
+       
+         
+          
+
+          
+          
+      
+      </Fragment>
+      </Router>
+      </ContactState>
+     
     );
-  }
+
 }
 
 export default App;
