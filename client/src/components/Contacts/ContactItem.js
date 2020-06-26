@@ -1,18 +1,22 @@
 import React,{useContext} from 'react';
 import {MDBIcon, MDBBtn,MDBBadge, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 import ContactContext from '../../Context/Contact/ContactContext';
-import { DELETE_CONTACT } from '../../Context/types';
+
 
 const CardExample = ({contact}) => {
  const  contactContext = useContext(ContactContext);
- const {deleteContact} =contactContext;
+ const {deleteContact,setCurrent,clearCurrent} =contactContext;
 
  
   const {id,name,email,phone,type} = contact;
 
   const onDelete=()=>{
-    deleteContact(id)
+    deleteContact(id);
+    clearCurrent()
+
   }
+
+  
     return (
     <MDBCol>
       <MDBCard style={{ width: "22rem" }}>
@@ -38,8 +42,8 @@ const CardExample = ({contact}) => {
                 
           </MDBCardText>
           <p>
-          <MDBBtn color="elegant">edit</MDBBtn>
-          <MDBBtn color="danger" onClick={onDelete}>delete</MDBBtn>
+          <MDBBtn color="elegant" onClick={()=>setCurrent(contact)}>Edit</MDBBtn>
+          <MDBBtn color="danger" onClick={onDelete}>Delete</MDBBtn>
           </p>
         </MDBCardBody>
       </MDBCard>

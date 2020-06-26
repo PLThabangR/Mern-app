@@ -55,11 +55,11 @@ return (
           <div className="row">
           <div className="col-md-6">
           <input type="radio" name="type" value="personal" checked={type==='personal'} onChange={onChange}/>
-          Personal{''}
+          {" "}Personal
              </div>   
              <div className="col-md-6">
           <input type="radio" name="type" value="professional" checked={type==='professional'} onChange={onChange}/>
-          Professional
+         {" "} Professional
         </div>
         </div>
         </div>

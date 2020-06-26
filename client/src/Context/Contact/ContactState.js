@@ -37,7 +37,8 @@ const ContactState  =props =>{
                 phone:'444-555-333',
                 type:'personal'
             }
-        ]
+        ],
+        current:null
     };
     //Pull out the state and dispatch to reducer
     const [state,dispatch] = useReducer(contactReducer,intialState);
@@ -58,9 +59,21 @@ const ContactState  =props =>{
         dispatch({type:DELETE_CONTACT, payload:id});
     }
 
-    //set current contact
+    //set current Contact
+    const setCurrent = contact =>{
+        //ontact.id = Math.round();
+
+        dispatch({type:SET_CURRENT, payload:contact});
+    }
 
     //clear current contact
+
+      //set current contact
+      const clearCurrent =()=>{
+        //ontact.id = Math.round();
+
+        dispatch({type:CLEAR_CURRENT});
+    }
 
     //update contact
 
@@ -73,9 +86,12 @@ const ContactState  =props =>{
         value={{
                 //We are passing the state so it can be accessed in components
                 contacts: state.contacts,
+                current:state.current,
                 //add this methods here so we cant acces them in components
                 addContact,
-                deleteContact
+                deleteContact,
+                clearCurrent,
+                setCurrent,
           }}
         >
         
