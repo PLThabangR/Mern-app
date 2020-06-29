@@ -20,25 +20,26 @@ const ContactState  =props =>{
                 id:1,
                 name:'jill johnson',
                 email:'jill@gmail.com',
-                phone:'111-111-1111',
+                phone:'089654321',
                 type:'personal'
             },
             {
                 id:2,
                 name:'jack jackson',
                 email:'jack@gmail.com',
-                phone:'333-11551-444',
+                phone:'0785661779',
                 type:'professional'
             },
             {
                 id:3,
                 name:'peter johns',
                 email:'peterJohns@gmail.com',
-                phone:'444-555-333',
+                phone:'0839793565',
                 type:'personal'
             }
         ],
-        current:null
+        current:null,
+        filtered:null
     };
     //Pull out the state and dispatch to reducer
     const [state,dispatch] = useReducer(contactReducer,intialState);
@@ -76,10 +77,26 @@ const ContactState  =props =>{
     }
 
     //update contact
+    const updateContact = contact =>{
+        //ontact.id = Math.round();
+
+        dispatch({type:UPDATE_CONTACT, payload:contact});
+    }
 
     ///filter contact
+    const filterContacts = text =>{
+
+        dispatch({type:FILTER_CONTACTS, payload:text});
+    }
+
+
 
     //clear filter
+    const clearCurrent =()=>{
+        //ontact.id = Math.round();
+        dispatch({type:CLEAR_FILTER});
+    }
+
 
     return(
         <contactContext.Provider
@@ -92,6 +109,7 @@ const ContactState  =props =>{
                 deleteContact,
                 clearCurrent,
                 setCurrent,
+                updateContact
           }}
         >
         

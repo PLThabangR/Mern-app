@@ -12,7 +12,7 @@ const CardExample = ({contact}) => {
 
   const onDelete=()=>{
     deleteContact(id);
-    clearCurrent()
+    clearCurrent();
 
   }
 
