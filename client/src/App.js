@@ -6,11 +6,16 @@ import logo from "./logo.png";
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import Home from './components/Pages/Home';
 import About from './components/Pages/about';
+import Register from './components/Auth/Register';
+import Login from './components/Auth/Login';
 
 import ContactState from '../src/Context/Contact/ContactState';
+import AuthState from './Context/Auth/AuthState';
+
 const App =()=> {
  
     return (
+     <AuthState>
       <ContactState>
       <Router>
       <Fragment>
@@ -20,19 +25,19 @@ const App =()=> {
       <Switch>
       <Route exact path="/" component={Home}/>
       <Route exact path="/about" component={About}/>
+      <Route exact path="/register" component={Register}/>
+      <Route exact path="/login" component={Login}/>
       </Switch>
       </div>
       
        
          
-          
-
-          
-          
-      
       </Fragment>
       </Router>
       </ContactState>
+      </AuthState>
+     
+      
      
     );
 

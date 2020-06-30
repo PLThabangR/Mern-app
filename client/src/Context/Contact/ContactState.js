@@ -1,5 +1,4 @@
 import React,{useReducer} from 'react';
-import uuid from 'uuid';
 import contactContext from './ContactContext';
 import contactReducer from './contactReducer';
 import {
@@ -92,7 +91,7 @@ const ContactState  =props =>{
 
 
     //clear filter
-    const clearCurrent =()=>{
+    const clearFilter =()=>{
         //ontact.id = Math.round();
         dispatch({type:CLEAR_FILTER});
     }
@@ -103,13 +102,16 @@ const ContactState  =props =>{
         value={{
                 //We are passing the state so it can be accessed in components
                 contacts: state.contacts,
-                current:state.current,
+                current:  state.current,
+                filtered: state.filtered,
                 //add this methods here so we cant acces them in components
                 addContact,
                 deleteContact,
                 clearCurrent,
                 setCurrent,
-                updateContact
+                updateContact,
+                filterContacts,
+                clearFilter
           }}
         >
         
