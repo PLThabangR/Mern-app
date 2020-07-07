@@ -30,6 +30,12 @@ render() {
             <MDBNavItem>
               <MDBNavLink to="/about">About</MDBNavLink>
             </MDBNavItem>
+            <MDBNavItem>
+            <MDBNavLink to="/register">Register</MDBNavLink>
+          </MDBNavItem>
+          <MDBNavItem>
+          <MDBNavLink to="/login">Login</MDBNavLink>
+        </MDBNavItem>
             
           
           </MDBNavbarNav>

@@ -29,13 +29,13 @@ const AuthState  =props =>{
     //Load user
 
 
-    //Register user
+    //Register user get the token
 
-    //Login user 
+    //Login user  get the token
 
-    //logout
+    //logout  destroy token
 
-    //clear errors
+    //clear errors clear any errors
    
 
     return(

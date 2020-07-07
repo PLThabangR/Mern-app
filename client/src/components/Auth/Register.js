@@ -1,9 +1,14 @@
-import React,{useState} from "react";
+import React,{useState,useContext} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
+import AlertContext from "../../Context/Alert/AlertContext";
 
 const FormPage = () => {
 
-const [user,setUser] = useState({
+  const alertContext = useContext(AlertContext);
+
+  const {setAlert} = alertContext;
+
+  const [user,setUser] = useState({
 
     name:'',
     email:'',
@@ -14,16 +19,26 @@ const [user,setUser] = useState({
 
 const {name,email,password,password2} = user;
 
-const onChange=e => setUser({  ...user,[e.target.name]: e.target.value});
+const onChange=e => {
+  console.log(e.target.value);
+  setUser({  ...user,[e.target.name]: e.target.value});}
 
 const onSubmit = e =>{
-    e.preventDefault();
+  e.preventDefault();
+  if(name ==='' || email ==='' || password ===''){
+    setAlert('Please enter all fields','danger');
+  }else if (password !== password2){
+    setAlert('Passwords does not  match','danger');
+  }else{
     console.log('register submit');
+  }
+
+    
 }
 return (
 <MDBContainer>
   <MDBRow>
-    <MDBCol md="6">
+    <MDBCol md="8">
       <form onSubmit={onSubmit}>
         <p className="h5 text-center mb-4">Register account</p>
         <div className="grey-text">
@@ -36,8 +51,8 @@ return (
           <MDBInput label="confirm your password" icon="lock" group type="password" validate 
           name="password2" value={password2} onChange={onChange}/>
         </div>
-        <div className="text-center" value="Register">
-          <MDBBtn>Register</MDBBtn>
+        <div className="text-center">
+          <MDBBtn  type="submit" value="Register">Register</MDBBtn>
         </div>
       </form>
     </MDBCol>

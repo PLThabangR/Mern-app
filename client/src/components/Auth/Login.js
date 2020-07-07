@@ -20,9 +20,9 @@ const onSubmit = e =>{
 return (
 <MDBContainer>
   <MDBRow>
-    <MDBCol md="6">
+    <MDBCol md="8">
       <form onSubmit={onSubmit}>
-        <p className="h5 text-center mb-4">Register account</p>
+        <p className="h5 text-center mb-4">Login</p>
         <div className="grey-text">
         
           <MDBInput label="Type your email" icon="envelope" group type="email" validate error="wrong"
@@ -31,8 +31,8 @@ return (
           name="password" value={password} onChange={onChange}/>
         
         </div>
-        <div className="text-center" value="Login">
-          <MDBBtn>Login</MDBBtn>
+        <div className="text-center" >
+          <MDBBtn  type="submit" value="Login">Login</MDBBtn>
         </div>
       </form>
     </MDBCol>
