@@ -6,6 +6,7 @@ const bcryt = require("bcryptjs");
 const jwt =require('jsonwebtoken');
 const config = require('config');
 
+
 //create s router variable with express
 const router = express.Router();
 

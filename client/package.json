@@ -1,5 +1,5 @@
 {
-  "name": "your-app",
+  "name": "contact-keeper",
   "version": "0.1.0",
   "private": true,
   "// If You want to install mdbreact from our GitLab repository, please replace '4.27.0' with gitURL provided here ->": "git+https://oauth2:<YOUR-TOKEN-GOES-HERE>@git.mdbootstrap.com/mdb/react/re-pro.git",
@@ -30,5 +30,7 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+"proxy":"http://localhost:5000"
+
 }

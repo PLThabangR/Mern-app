@@ -1,12 +1,30 @@
-import React,{useState,useContext} from "react";
+import React,{useState,useContext,useEffect} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import AlertContext from "../../Context/Alert/AlertContext";
+import AuthContext from '../../Context/Auth/AuthContext';
 
-const FormPage = () => {
+const FormPage = (props) => {
 
   const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
 
+  const {register,error,clearErrors,isAuthenticated} =authContext;
   const {setAlert} = alertContext;
+
+useEffect(()=>{
+  if(isAuthenticated){
+    //to redirect we use props
+
+    props.history.push('/');
+  }
+
+  if(error==='User already exist'){
+    setAlert('Please enter all fields','danger');
+    clearErrors()
+  }
+  //eslint-disable-line
+},[error,isAuthenticated,props.history])
+
 
   const [user,setUser] = useState({
 
@@ -29,8 +47,13 @@ const onSubmit = e =>{
     setAlert('Please enter all fields','danger');
   }else if (password !== password2){
     setAlert('Passwords does not  match','danger');
+  }else if(password.length <= 6){
+    setAlert('Password should be atleast 6 characters','danger');
   }else{
     console.log('register submit');
+    register({
+      name,email,password
+    })
   }
 
     
@@ -47,9 +70,9 @@ return (
           <MDBInput label="Type your email" icon="envelope" group type="email" validate error="wrong"
             success="right" name="email" value={email} onChange={onChange} />
           <MDBInput label="Type your password" icon="lock" group type="password" validate 
-          name="password" value={password} onChange={onChange}/>
+          name="password" value={password} onChange={onChange}  />
           <MDBInput label="confirm your password" icon="lock" group type="password" validate 
-          name="password2" value={password2} onChange={onChange}/>
+          name="password2" value={password2} onChange={onChange} />
         </div>
         <div className="text-center">
           <MDBBtn  type="submit" value="Register">Register</MDBBtn>
