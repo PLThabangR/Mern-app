@@ -1,8 +1,40 @@
-import React,{useState} from "react";
+import React,{useState,useContext,useEffect} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
+import AlertContext from "../../Context/Alert/AlertContext";
+import AuthContext from '../../Context/Auth/AuthContext';
 
-const FormPage = () => {
+const FormPage = (props) => {
+  const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
 
+
+  const {login,error,clearErrors,isAuthenticated} =authContext;
+  const {setAlert} = alertContext;
+
+
+  useEffect(()=>{
+    //if the token is authenticated redirect to the home page
+    if(isAuthenticated){
+      //to redirect we use props
+  
+      props.history.push('/');
+    }
+  
+    if(error==='Invalid credentials'){
+      setAlert(error,'danger');
+      clearErrors()
+    }
+
+    if(error==='Server error'){
+      setAlert(error,'danger');
+      clearErrors()
+    }
+
+    
+    //eslint-disable-line
+  },[error,isAuthenticated,props.history])
+  
+  
 const [user,setUser] = useState({
 
     email:'',
@@ -15,7 +47,14 @@ const onChange=e => setUser({  ...user,[e.target.name]: e.target.value});
 
 const onSubmit = e =>{
     e.preventDefault();
-    console.log('login submit');
+   if(email === '' || password ===''){
+    setAlert('Please enter all fields','danger');
+   }else{
+     login({
+       email,
+       password,
+     })
+   }
 }
 return (
 <MDBContainer>

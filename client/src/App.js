@@ -8,7 +8,8 @@ import About from './components/Pages/about';
 import Register from './components/Auth/Register';
 import Login from './components/Auth/Login';
 import Alert from './components/Layout/Alerts';
-
+//Private route import
+import PrivateRoute from './components/Routing/PrivateRoute';
 //context imports
 import ContactState from '../src/Context/Contact/ContactState';
 import AuthState from './Context/Auth/AuthState';
@@ -33,7 +34,7 @@ const App =()=> {
       <div className="container">
       <Alert/>
       <Switch>
-      <Route exact path="/" component={Home}/>
+      <PrivateRoute exact path="/" component={Home}/>
       <Route exact path="/about" component={About}/>
       <Route exact path="/register" component={Register}/>
       <Route exact path="/login" component={Login}/>

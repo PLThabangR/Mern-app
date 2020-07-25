@@ -42,7 +42,7 @@ const AuthState  =props =>{
 
             try{
                 //This is a private route for single user
-                const res = await axios.get('api/auth');
+                const res = await axios.get('/api/auth');
 
 
                 dispatch({type:USER_LOADED,
@@ -63,7 +63,7 @@ const AuthState  =props =>{
 
         try{
             //Make the request to the backend
-            const res = await axios.post('http://localhost:5000/api/users',formData,config);
+            const res = await axios.post('/api/users',formData,config);
 
             dispatch({
                 type:REGISTER_SUCCESS,
@@ -82,12 +82,35 @@ const AuthState  =props =>{
 
 
     //Login user  get the token
-    const login =()=>{
+    const login = async formData =>{
+        const config ={
+            headers:{
+                'Content-Type':'application/json'
+            }
+        }
 
+        try{
+            //Make the request to the backend
+            const res = await axios.post('/api/auth',formData,config);
+
+            dispatch({
+                type:LOGIN_SUCCESS,
+                payload: res.data
+            });
+
+            loadUser();
+        }catch(err){
+            dispatch({
+                type:LOGIN_FAIL,
+                payload: err.response.data.msg
+            })
+
+        }
     }
+  
     //logout  destroy token
     const logout =()=>{
-
+        dispatch({type:LOGOUT});
     }
 
     //clear errors clear any errors
@@ -110,7 +133,9 @@ const AuthState  =props =>{
                 //add this methods here so we cant acces them in components
                 register,
                 clearErrors,
-                loadUser
+                loadUser,
+                login,
+                logout
 
                 //load user
                 

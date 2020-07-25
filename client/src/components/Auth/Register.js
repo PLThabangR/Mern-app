@@ -12,6 +12,7 @@ const FormPage = (props) => {
   const {setAlert} = alertContext;
 
 useEffect(()=>{
+  //if the token is authenticated redirect to the home page
   if(isAuthenticated){
     //to redirect we use props
 
@@ -19,7 +20,7 @@ useEffect(()=>{
   }
 
   if(error==='User already exist'){
-    setAlert('Please enter all fields','danger');
+    setAlert(error,'danger');
     clearErrors()
   }
   //eslint-disable-line

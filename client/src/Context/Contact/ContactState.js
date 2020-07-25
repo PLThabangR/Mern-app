@@ -1,4 +1,5 @@
 import React,{useReducer} from 'react';
+import axios from 'axios'
 import contactContext from './ContactContext';
 import contactReducer from './contactReducer';
 import {
@@ -8,55 +9,72 @@ import {
     CLEAR_CURRENT,
     CLEAR_FILTER,
     UPDATE_CONTACT,
-    FILTER_CONTACTS
+    FILTER_CONTACTS,
+    CONTACT_ERROR,
+    GET_CONTACTS,
+    CLEAR_CONTACTS
 
 } from '../types';
 
 const ContactState  =props =>{
     const intialState={
-        contacts:[
-            {
-                id:1,
-                name:'jill johnson',
-                email:'jill@gmail.com',
-                phone:'089654321',
-                type:'personal'
-            },
-            {
-                id:2,
-                name:'jack jackson',
-                email:'jack@gmail.com',
-                phone:'0785661779',
-                type:'professional'
-            },
-            {
-                id:3,
-                name:'peter johns',
-                email:'peterJohns@gmail.com',
-                phone:'0839793565',
-                type:'personal'
-            }
-        ],
+        contacts:null,
         current:null,
-        filtered:null
+        filtered:null,
+        error:null
     };
     //Pull out the state and dispatch to reducer
     const [state,dispatch] = useReducer(contactReducer,intialState);
 
+    //Get contacts 
+  const getContacts =async ()=>{
+    try{
+        const res = await axios.get('/api/contact');
+        dispatch({type:GET_CONTACTS, payload:res.data});
+
+      }catch(err){
+        dispatch({type:CONTACT_ERROR, payload:err.response.msg});
+      }  
+
+  }
+
+  //clear contact after user logout
+  const clearContacts = ()=>{
+      dispatch({type:CLEAR_CONTACTS});
+  }
+
+
 
     //Add contacts
-    const addContact =contact =>{
-        contact.id = Math.round();
+    const addContact =async contact =>{
+      //This request must go with headers
+        const config={
+          headers:{
+              'Content-Type':'application/json'
+          }
+      };
 
-        dispatch({type:ADD_CONTACT, payload:contact});
+      try{
+        const res = await axios.post('/api/contact', contact,config);
+        dispatch({type:ADD_CONTACT, payload:res.data});
+
+      }catch(err){
+        dispatch({type:CONTACT_ERROR, payload:err.response.msg});
+      }    
     }
 
 
     //Delete contact
-    const deleteContact =id =>{
-        //ontact.id = Math.round();
-
-        dispatch({type:DELETE_CONTACT, payload:id});
+    const deleteContact =async( id) =>{
+    
+        try{
+          await axios.delete(`/api/contact/${id}`);
+          dispatch({type:DELETE_CONTACT, payload:id});
+  
+        }catch(err){
+          dispatch({type:CONTACT_ERROR, payload:err.response.msg});
+        }   
+ 
     }
 
     //set current Contact
@@ -76,10 +94,22 @@ const ContactState  =props =>{
     }
 
     //update contact
-    const updateContact = contact =>{
+    const updateContact = async contact =>{
         //ontact.id = Math.round();
+        const config={
+          headers:{
+              'Content-Type':'application/json'
+          }
+      };
 
-        dispatch({type:UPDATE_CONTACT, payload:contact});
+      try{
+        const res = await axios.put(`/api/contact/${contact._id}`, contact,config);
+       
+        dispatch({type:UPDATE_CONTACT, payload:res.data});
+      }catch(err){
+        dispatch({type:CONTACT_ERROR, payload:err.response.msg});
+      }    
+       
     }
 
     ///filter contact
@@ -104,6 +134,7 @@ const ContactState  =props =>{
                 contacts: state.contacts,
                 current:  state.current,
                 filtered: state.filtered,
+                errror:state.error,
                 //add this methods here so we cant acces them in components
                 addContact,
                 deleteContact,
@@ -111,7 +142,10 @@ const ContactState  =props =>{
                 setCurrent,
                 updateContact,
                 filterContacts,
-                clearFilter
+                clearFilter,
+                getContacts,
+                clearContacts
+
           }}
         >
         
